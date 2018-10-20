@@ -1,0 +1,135 @@
+第三章 
+
+3-1 Jupyter Notebook基础
+
+JupyterNotebook介绍:
+Jupyter Notebook, 以前又称为IPython notebook,是一个交互式笔记本, 支持运行40+种
+编程语言. 可以用来编写漂亮的交互式文档；
+文档地址: https://jupyter-notebook.readthedocs.io/en/latest/
+
+你要向别人解释你的程序, 你可能要新建一个word, 把代码复制进去, 对每块代码进行讲解.
+这样会有几个问题:
+
+ 1) 代码格式不好看; 
+ 2) 代码的配色丢失; 
+ 3) 代码与文字解释部分区分不明显;
+
+使用Jupyter Notebook, 可以让代码保持其在编辑器里面的格式, 看起来很正规. 而且, 复制
+进去的代码是可以运行的. 敲击完代码之后, 按Shift+Enter, 或者上面的Run Cell键变可以得
+到代码运行结果. 这里, 写Notebook时候, 都是以cell为基本单位的, cell有几种类型: 如code
+, markdown, heading等. 如果设置为code类型, 里面的内容就是可以运行的; heading类型的
+cell可以帮助我们设置标题(一级,二级,三级等标题), markdown类型的cell可以使我们用markdown
+的语法来编辑文本.
+
+使用方法介绍:
+New按钮可以创建Python3或文本文件、文件夹、命令行形式的操作
+Help菜单项，选择Keyboard Shortcuts可以查看所有的快捷键
+同时也有图形化的界面起着同样的功能
+常用快捷键: 
+Run Cells: ctrl + enter
+Run Cells and Insert Below： alt + enter
+Run Cells and Select Below: shift + enter
+Insert Cell Above: a
+Insert Cell Below: b
+Delete selected Cells: D, D
+Cell Type默认是Code, 要变成MarkDown: m
+如果要变成Code: y
+Kernel菜单项选择restart & run all是将所有的Cells从上到下按顺序重新运行，之前的所有变量和输出将会丢失
+1.png
+
+
+
+3-2 Jupyter notebook中的魔法命令
+
+(1) %run 在Jupyter notebook中运行项目代码用法:
+在Jupyter notebook中创建了一个Python3 notebook,与Pycharm创建的
+project name相同,我们如何在notebook中直接运行Pycharm中的main.py代码呢?
+2.png 3.png
+在notebook运行如图所示:
+4.png
+可以看到Pycharm创建的项目main.py脚本得到运行，并且hello()函数相当于导入了
+进来
+
+
+在Jupyter notebook中加载整个模块:
+5.png
+可以看到模块被加载进来，可以直接调用函数或者类、常量等
+
+(2) 测试代码的执行时间%time和%timeit
+IPython专门提供了两个魔法方法(%time和timeit)，%time一次执行一条语句，然后报告总体执行时间。
+为了得到更为精确的结果，需要使用%timeit,对于任意语句，它会自动多次执行以产生一个非常精确的平均
+执行时间。
+
+.md Markdown文件
+
+
+
+3-3 numpy数据基础
+文档位置: http://www.numpy.org/
+文档基本介绍如下:
+NumPy is the fundamental package for scientific computing with Python. It contains among other things:
+
+a powerful N-dimensional array object
+sophisticated (broadcasting) functions
+tools for integrating C/C++ and Fortran code
+useful linear algebra, Fourier transform, and random number capabilities
+Besides its obvious scientific uses, NumPy can also be used as an efficient multi-dimensional container of generic data. Arbitrary data-types can be defined. This allows NumPy to seamlessly and speedily integrate with a wide variety of databases.
+
+NumPy is licensed under the BSD license, enabling reuse with few restrictions.
+Numpy是使用Python进行科学计算的基本包。其中包括:
+一个强大的n维数组对象
+复杂的(广播)函数
+用于集成C/C++和Fortran代码的工具
+有用的线性代数，傅里叶变换和随机数能力
+除了其明显的科学用途外，Numpy还可以用作通用数据的有效的多维容器。可以定义任意数据类型。
+这使得Numpy可以无缝且快速地与各种数据库集成，Numpy是在BSD许可下授权的，允许在很少限制的
+情况下重用。
+
+
+
+3-4 创建Numpy数组(和矩阵)
+https://docs.scipy.org/doc/numpy/user/quickstart.html
+可以自己看开发文档，这里不介绍，都是基础的东西
+03.md
+
+
+
+3-5 Numpy数组(和矩阵)的基本操作
+文档位置: 
+https://docs.scipy.org/doc/numpy/user/quickstart.html
+ndarray.ndim 数组的维数
+the number of axes (dimensions) of the array.
+
+ndarray.shape 返回的是一个元组，表示每个维度的数组大小,元组的长度是维数
+n行m列矩阵，返回的是(n, m)
+the dimensions of the array. This is a tuple of integers indicating the size of the array in each dimension. For a matrix with n rows and m columns, shape will be (n,m). The length of the shape tuple is therefore the number of axes, ndim.
+
+ndarray.size 数组的总元素个数。 等于shape中所有数字的乘积
+the total number of elements of the array. This is equal to the product of the elements of shape.
+
+ndarray.dtype
+an object describing the type of the elements in the array. One can create or specify dtype’s using standard Python types. Additionally NumPy provides types of its own. numpy.int32, numpy.int16, and numpy.float64 are some examples.
+
+ndarray.itemsize
+the size in bytes of each element of the array. For example, an array of elements of type float64 has itemsize 8 (=64/8), while one of type complex32 has itemsize 4 (=32/8). It is equivalent to ndarray.dtype.itemsize.
+
+ndarray.data
+the buffer containing the actual elements of the array. Normally, we won’t need to use this attribute because we will access the elements in an array using indexing facilities.
+
+
+
+3-6 Numpy数组(和矩阵)的合并与分割
+合并方法:
+numpy.concatenate((a1, a2, ...), axis=0, out=None)
+Join a sequence of arrays along an existing axis.
+
+Parameters:	
+a1, a2, … : sequence of array_like
+	The arrays must have the same shape, except in the dimension corresponding to axis (the first, by default).
+axis : int, optional
+	The axis along which the arrays will be joined. If axis is None, arrays are flattened before use. Default is 0.
+out : ndarray, optional
+	If provided, the destination to place the result. The shape must be correct, matching that of what concatenate would have returned if no out argument were specified.
+Returns:	
+	res : ndarray
+	The concatenated array.
