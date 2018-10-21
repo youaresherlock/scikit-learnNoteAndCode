@@ -100,26 +100,29 @@ https://docs.scipy.org/doc/numpy/user/quickstart.html
 ndarray.ndim 数组的维数
 the number of axes (dimensions) of the array.
 
-ndarray.shape 返回的是一个元组，表示每个维度的数组大小,元组的长度是维数
+(1) ndarray.shape 返回的是一个元组，表示每个维度的数组大小,元组的长度是维数
 n行m列矩阵，返回的是(n, m)
 the dimensions of the array. This is a tuple of integers indicating the size of the array in each dimension. For a matrix with n rows and m columns, shape will be (n,m). The length of the shape tuple is therefore the number of axes, ndim.
 
-ndarray.size 数组的总元素个数。 等于shape中所有数字的乘积
+(2) ndarray.size 数组的总元素个数。 等于shape中所有数字的乘积
 the total number of elements of the array. This is equal to the product of the elements of shape.
 
-ndarray.dtype
+(3) ndarray.dtype
 an object describing the type of the elements in the array. One can create or specify dtype’s using standard Python types. Additionally NumPy provides types of its own. numpy.int32, numpy.int16, and numpy.float64 are some examples.
 
-ndarray.itemsize
+(4) ndarray.itemsize
 the size in bytes of each element of the array. For example, an array of elements of type float64 has itemsize 8 (=64/8), while one of type complex32 has itemsize 4 (=32/8). It is equivalent to ndarray.dtype.itemsize.
 
-ndarray.data
+(5) ndarray.data
 the buffer containing the actual elements of the array. Normally, we won’t need to use this attribute because we will access the elements in an array using indexing facilities.
 
 
 
 3-6 Numpy数组(和矩阵)的合并与分割
-合并方法:
+合并操作:
+
+(1) numpy.concatenate() 
+要注意的是不同维的矩阵合并要转换成同维度才可以合并
 numpy.concatenate((a1, a2, ...), axis=0, out=None)
 Join a sequence of arrays along an existing axis.
 
@@ -133,3 +136,84 @@ out : ndarray, optional
 Returns:	
 	res : ndarray
 	The concatenated array.
+
+
+(2) numpy.vstack
+可以看到这个合并方法可以智能将一维数组转化成(1,N)
+垂直方向上堆叠，行智能
+numpy.vstack(tup)
+Stack arrays in sequence vertically (row wise).
+
+This is equivalent to concatenation along the first axis after 1-D arrays of shape (N,) have been reshaped to (1,N). Rebuilds arrays divided by vsplit.
+
+This function makes most sense for arrays with up to 3 dimensions. For instance, for pixel-data with a height (first axis), width (second axis), and r/g/b channels (third axis). The functions concatenate, stack and block provide more general stacking and concatenation operations.
+
+Parameters:	
+tup : sequence of ndarrays
+The arrays must have the same shape along all but the first axis. 1-D arrays must have the same length.
+Returns:	
+stacked : ndarray
+The array formed by stacking the given arrays, will be at least 2-D.
+
+
+(3) numpy.hstack
+水平方线上对的，列智能
+numpy.hstack(tup)
+Stack arrays in sequence horizontally (column wise).
+
+This is equivalent to concatenation along the second axis, except for 1-D arrays where it concatenates along the first axis. Rebuilds arrays divided by hsplit.
+
+This function makes most sense for arrays with up to 3 dimensions. For instance, for pixel-data with a height (first axis), width (second axis), and r/g/b channels (third axis). The functions concatenate, stack and block provide more general stacking and concatenation operations.
+
+Parameters:	
+tup : sequence of ndarrays
+The arrays must have the same shape along all but the second axis, except 1-D arrays which can be any length.
+Returns:	
+stacked : ndarray
+The array formed by stacking the given arrays.
+
+
+
+分割操作:
+
+(1) numpy.split(ary, indices_or_sections, axis=0)
+Split an array into multiple sub-arrays.
+
+Parameters:	
+ary : ndarray
+Array to be divided into sub-arrays.
+indices_or_sections : int or 1-D array
+If indices_or_sections is an integer, N, the array will be divided into N equal arrays along axis. If such a split is not possible, an error is raised.
+If indices_or_sections is a 1-D array of sorted integers, the entries indicate where along axis the array is split. For example, [2, 3] would, for axis=0, result in
+ary[:2]
+ary[2:3]
+ary[3:]
+If an index exceeds the dimension of the array along axis, an empty sub-array is returned correspondingly.
+axis : int, optional
+The axis along which to split, default is 0.
+Returns:	
+sub-arrays : list of ndarrays
+A list of sub-arrays.
+Raises:	
+ValueError
+If indices_or_sections is given as an integer, but a split does not result in equal division.
+
+(2) hsplit vsplit分别是在水平和垂直方向上分割
+06.md
+
+
+
+3-7 Numpy中矩阵的运算
+文档位置: https://docs.scipy.org/doc/numpy/user/quickstart.html#universal-functions
+Universal Functions
+NumPy provides familiar mathematical functions such as sin, cos, and exp. In NumPy, these are called “universal functions”(ufunc). Within NumPy, these functions operate elementwise on an array, producing an array as output
+Numpy提供了常见的数学函数，例如sin、cos和exp.这些被称为通用函数.在Numpy中，
+这些函数在数组上按元素操作，生成作为输出的数组
+
+矩阵运算:
+3-7.md
+
+
+
+3-8 Numpy中的聚合运算
+max(), min(), sum()
