@@ -1,0 +1,93 @@
+3-9 Numpy中的arg运算
+
+(1) numpy.argmin(x) numpy.argmax(x)方法 
+返回最大值和最小值的索引
+
+numpy.argmin(a, axis=None, out=None)
+Returns the indices of the minimum values along an axis.
+返回沿着给定轴的最小值的索引
+
+Parameters:	
+a : array_like 
+Input array.
+axis : int, optional
+By default, the index is into the flattened array, otherwise along the specified axis.
+out : array, optional
+If provided, the result will be inserted into this array. It should be of the appropriate shape and dtype.
+Returns:	
+index_array : ndarray of ints
+Array of indices into the array. It has the same shape as a.shape with the dimension along axis removed.
+
+
+(2) 排序和使用索引
+1)我们知道Python中有sorted()内置函数，以及可迭代对象有sort()方法
+sort与sorted区别:
+sort 是应用在 list 上的方法，sorted 可以对所有可迭代的对象进行排序操作。
+list 的 sort 方法返回的是对已经存在的列表进行操作，无返回值，而内建函数 
+sorted 方法返回的是一个新的 list，而不是在原来的基础上进行的操作。
+在numpy中这样类似的特点也沿袭了下来
+
+代码:
+
+import numpy as np
+x = np.arange(16)
+np.random.shuffle(x) # 乱序一下
+np.sort(x) # 返回新的一个array
+x.sort() # 本身进行排序
+
+numpy.sort方法
+numpy.sort(a, axis=-1, kind='quicksort', order=None)
+Return a sorted copy of an array. 
+返回一个排好序的数组,可以看到使用的是快排(不稳定算法，时间复杂度为O(nlogn))
+axis参数可以选择0或1，是沿着不同的轴进行排序
+
+Parameters:	
+a : array_like
+Array to be sorted.
+axis : int or None, optional
+Axis along which to sort. If None, the array is flattened before sorting. The default is -1, which sorts along the last axis.
+kind : {‘quicksort’, ‘mergesort’, ‘heapsort’, ‘stable’}, optional
+Sorting algorithm. Default is ‘quicksort’.
+order : str or list of str, optional
+When a is an array with fields defined, this argument specifies which fields to compare first, second, etc. A single field can be specified as a string, and not all fields need be specified, but unspecified fields will still be used, in the order in which they come up in the dtype, to break ties.
+Returns:	
+sorted_array : ndarray
+Array of the same type and shape as a.
+
+
+同理np.argsort(x)是返回排序之后的各个元素在原来数组中的下标
+
+
+2) 我们知道快速排序是冒泡排序的改进(可以去看算法导论或者啊哈算法等算法书)，
+首先在初始状态下，选择一个基准数，然后安排两末尾两个哨兵i,j;通过交换待排序元素
+将小于基准数的在左边，大于等于基准数的在右边，这样不断选新的基准点递归下去，
+最终每个快只有一个元素，也就排好序了。而numpy.partition()方法也就是找到给定
+的基准点第一次排序的结果
+
+numpy.partition方法:
+numpy.partition(a, kth, axis=-1, kind='introselect', order=None)
+Return a partitioned copy of an array.
+
+Creates a copy of the array with its elements rearranged in such a way that the value of the element in k-th position is in the position it would be in a sorted array. All elements smaller than the k-th element are moved before this element and all equal or greater are moved behind it. The ordering of the elements in the two partitions is undefined.
+创建数组的副本，并将其元素重新排列，使第k个位置的元素的值处于排序数组的位置。所有小于第k个元素的元素都在这个元素前面移动，所有相等或更大的元素都在后面移动。两个分区中元素的顺序没有定义。
+New in version 1.8.0.
+
+Parameters:	
+a : array_like
+Array to be sorted.
+kth : int or sequence of ints
+Element index to partition by. The k-th value of the element will be in its final sorted position and all smaller elements will be moved before it and all equal or greater elements behind it. The order of all elements in the partitions is undefined. If provided with a sequence of k-th it will partition all elements indexed by k-th of them into their sorted position at once.
+axis : int or None, optional
+Axis along which to sort. If None, the array is flattened before sorting. The default is -1, which sorts along the last axis.
+kind : {‘introselect’}, optional
+Selection algorithm. Default is ‘introselect’.
+order : str or list of str, optional
+When a is an array with fields defined, this argument specifies which fields to compare first, second, etc. A single field can be specified as a string. Not all fields need be specified, but unspecified fields will still be used, in the order in which they come up in the dtype, to break ties.
+Returns:	
+partitioned_array : ndarray
+Array of the same type and shape as a.
+
+类似的还有numpy.argpartition方法
+
+
+3-10 Numpy中的比较和Fancy Indexing

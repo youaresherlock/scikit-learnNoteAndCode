@@ -216,4 +216,5 @@ Numpy提供了常见的数学函数，例如sin、cos和exp.这些被称为通�
 
 
 3-8 Numpy中的聚合运算
-max(), min(), sum()
+max(), min(), sum(),prod(),mean(),median(),percentile()
+,var(),std()
