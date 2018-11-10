@@ -90,4 +90,15 @@ Array of the same type and shape as a.
 类似的还有numpy.argpartition方法
 
 
-3-10 Numpy中的比较和Fancy Indexing
+3) 3-10 Numpy中的比较和Fancy Indexing
+使用方法请看3-10FancyIndexing.ipynb可以看到numpy中对于矩阵的支持很棒，可以
+通过一维数组和二维数组来直接索引，方便取到矩阵中的任何数据
+
+
+numpy.array的比较
+x 
+array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15])
+x > 3
+array([False, False, False, False,  True,  True,  True,  True,  True,
+        True,  True,  True,  True,  True,  True,  True])
+可以看到结果是一个布尔数组
